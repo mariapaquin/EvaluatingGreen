@@ -51,7 +51,7 @@ df1['avgTime_green'] = df1[['time_greenA', 'time_greenB', 'time_greenC']].mean(a
 df1.reset_index(inplace=True)
 df1 = df1.drop(['index', 'timeA', 'timeB', 'timeC', 'time_greenA', 'time_greenB', 'time_greenC'], axis=1)
 
-print(df1.groupby('class')['method'].nunique().size)
+print(len(df1.groupby('project')))
 #
 # Calculate time ratio
 df1['Ts'] = pd.to_numeric(df1['avgTime_green'])/pd.to_numeric(df1['avgTime'])
@@ -65,7 +65,7 @@ Y_pred = linear_regressor.predict(x)
 ax[0].plot(df1.index, df1['Ts'], drawstyle="steps-pre", linewidth=0.75)
 ax[0].set_ylabel('Ts')
 ax[0].set_xlabel('Program #')
-ax[0].set_ylim([0, 1.2])
+ax[0].set_ylim([0, 1])
 # ax[0].plot(x, Y_pred, color='red')
 
 df1['Rs'] = pd.to_numeric(df1['cacheHits'])/pd.to_numeric(df1['invocations'])
@@ -77,7 +77,7 @@ ax[1].set_xlabel('Program #')
 
 ax2[0].boxplot(df1['Ts'])
 ax2[0].set_ylabel('Ts')
-ax2[0].set_ylim([0, 1.2])
+ax2[0].set_ylim([0, 1])
 
 ax2[1].boxplot(df1['Rs'])
 ax2[1].set_ylabel('Rs')
@@ -85,6 +85,6 @@ ax2[1].set_ylabel('Rs')
 print('pearson coefficient and p value:', pearsonr(df1['Ts'], df1['Rs']))
 plt.show()
 
-fig.savefig('plots/random/all/TsRs.png')
-fig2.savefig('plots/random/all/TsRsBoxplot.png')
+fig.savefig('plots/random/conditionHeavy/TsRs.png')
+fig2.savefig('plots/random/conditionHeavy/TsRsBoxplot.png')
 
